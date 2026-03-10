@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>더박스 상담 신청 | TheBox Busan</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --red: #C13030;
+  --red2: #E04040;
+  --cream: #FDF7F0;
+  --dark: #141010;
+  --off: #1E1818;
+  --warm: #F5EBE0;
+  --tan: #E2D0BC;
+  --muted: #8A7060;
+  --white: #FFFFFF;
+  --yellow: #F5C842;
+  --green: #4CAF6A;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Plus Jakarta Sans', 'Noto Sans KR', sans-serif;
+  background: var(--cream);
+  color: var(--dark);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* TOPBAR */
+.topbar { background: var(--red); padding: 10px 0; overflow: hidden; white-space: nowrap; }
+.topbar-track { display: inline-flex; gap: 0; animation: marquee 20s linear infinite; }
+.topbar-track span { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--white); padding: 0 28px; }
+.topbar-track span.dot { color: rgba(255,255,255,0.35); padding: 0 6px; }
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* HEADER */
+header {
+  background: var(--cream); border-bottom: 2px solid var(--dark);
+  padding: 0 48px; height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+.logo { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 3px; color: var(--dark); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.logo-badge { width: 34px; height: 34px; background: var(--red); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 17px; color: var(--white); transform: rotate(-4deg); box-shadow: 3px 3px 0 var(--dark); }
+.header-right { font-size: 13px; font-weight: 700; color: var(--muted); }
+
+/* HERO */
+.form-hero { background: var(--dark); padding: 64px 48px 56px; position: relative; overflow: hidden; }
+.form-hero::before { content: '상담'; font-family: 'Bebas Neue', sans-serif; font-size: 320px; letter-spacing: 4px; color: rgba(255,255,255,0.025); position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; white-space: nowrap; }
+.form-hero::after { content: ''; position: absolute; top: -80px; right: -80px; width: 400px; height: 400px; background: var(--red); border-radius: 50%; opacity: 0.07; pointer-events: none; }
+.hero-inner { position: relative; z-index: 2; max-width: 700px; }
+.hero-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--red); color: var(--white); padding: 6px 16px; border-radius: 6px; font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 24px; }
+.hero-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--yellow); animation: blink 1.4s ease-in-out infinite; }
+@keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.2; } }
+.hero-h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(56px, 8vw, 100px); line-height: 0.88; letter-spacing: 3px; color: var(--white); margin-bottom: 16px; }
+.hero-h1 .red { color: var(--red); }
+.hero-ko { font-family: 'Noto Sans KR', sans-serif; font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.5); letter-spacing: 3px; margin-bottom: 24px; }
+.hero-desc { font-size: 15px; color: rgba(255,255,255,0.55); line-height: 1.85; max-width: 580px; }
+.hero-desc strong { color: rgba(255,255,255,0.9); }
+.hero-notice { margin-top: 20px; padding: 14px 18px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.6; }
+.hero-notice strong { color: rgba(255,255,255,0.7); }
+
+/* PROGRESS */
+.progress-wrap { background: var(--white); border-bottom: 2px solid var(--tan); padding: 0 48px; position: sticky; top: 64px; z-index: 99; }
+.progress-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; gap: 16px; }
+.prog-steps { display: flex; gap: 8px; align-items: center; flex: 1; }
+.prog-step { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: var(--tan); letter-spacing: 0.5px; transition: color 0.3s; }
+.prog-step.active { color: var(--red); }
+.prog-step.done { color: var(--green); }
+.prog-step-num { width: 26px; height: 26px; border-radius: 50%; background: var(--tan); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; transition: background 0.3s; flex-shrink: 0; }
+.prog-step.active .prog-step-num { background: var(--red); }
+.prog-step.done .prog-step-num { background: var(--green); }
+.prog-sep { width: 24px; height: 2px; background: var(--tan); border-radius: 1px; flex-shrink: 0; transition: background 0.3s; }
+.prog-sep.done { background: var(--green); }
+.prog-label { font-size: 12px; font-weight: 800; color: var(--muted); letter-spacing: 1px; white-space: nowrap; }
+
+/* FORM CONTAINER */
+.form-container { max-width: 680px; margin: 0 auto; padding: 56px 24px 80px; }
+
+/* STEP */
+.form-step { display: none; }
+.form-step.active { display: block; animation: stepIn 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+@keyframes stepIn { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+.step-head { margin-bottom: 36px; }
+.step-tag { display: inline-block; background: var(--red); color: var(--white); font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; padding: 5px 14px; border-radius: 4px; margin-bottom: 14px; }
+.step-h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 6vw, 56px); line-height: 0.9; letter-spacing: 2px; color: var(--dark); margin-bottom: 10px; }
+.step-h2 .red { color: var(--red); }
+.step-sub { font-size: 14px; color: var(--muted); line-height: 1.7; font-weight: 500; }
+
+/* FIELDS */
+.field-group { margin-bottom: 22px; }
+.field-group.half-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.field-label { display: block; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--dark); margin-bottom: 8px; }
+.field-label .req { color: var(--red); margin-left: 3px; }
+.field-label .opt { font-size: 11px; font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--muted); margin-left: 6px; }
+.field-input, .field-textarea {
+  width: 100%; padding: 13px 16px;
+  border: 2px solid var(--dark); border-radius: 8px;
+  font-size: 15px; font-family: 'Plus Jakarta Sans', 'Noto Sans KR', sans-serif;
+  background: var(--white); color: var(--dark);
+  outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+}
+.field-input:focus, .field-textarea:focus { border-color: var(--red); box-shadow: 3px 3px 0 rgba(193,48,48,0.15); }
+.field-input::placeholder, .field-textarea::placeholder { color: var(--tan); }
+.field-textarea { min-height: 110px; resize: vertical; line-height: 1.6; }
+.field-hint { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+
+/* PILLS */
+.pill-group { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill-group.col2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.pill-item input[type="radio"], .pill-item input[type="checkbox"] { display: none; }
+.pill-item label { display: flex; align-items: center; gap: 9px; padding: 11px 18px; border: 2px solid var(--tan); border-radius: 8px; background: var(--white); font-size: 14px; font-weight: 600; color: var(--muted); cursor: pointer; transition: all 0.15s; line-height: 1.4; user-select: none; }
+.pill-item label:hover { border-color: var(--dark); color: var(--dark); transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--tan); }
+.pill-item input:checked + label { background: var(--dark); color: var(--white); border-color: var(--dark); box-shadow: 3px 3px 0 var(--red); transform: translate(-1px,-1px); }
+.pill-item.red-pill input:checked + label { background: var(--red); border-color: var(--red); box-shadow: 3px 3px 0 var(--dark); }
+.pill-emoji { font-size: 16px; flex-shrink: 0; }
+
+/* CONDITIONAL */
+.cond-field { margin-top: 12px; padding: 16px 18px; background: var(--warm); border: 2px solid var(--tan); border-radius: 8px; animation: fadeDown 0.25s ease; }
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+.cond-field .field-input, .cond-field .field-textarea { background: var(--white); }
+
+/* DIVIDER */
+.form-divider { border: none; border-top: 1px dashed var(--tan); margin: 28px 0; }
+
+/* ERROR */
+.field-error { display: none; color: var(--red); font-size: 13px; font-weight: 700; margin-top: 8px; padding: 10px 14px; background: rgba(193,48,48,0.07); border-radius: 6px; border-left: 3px solid var(--red); }
+
+/* BUTTONS */
+.btn-row { display: flex; gap: 12px; margin-top: 36px; }
+.btn-next { flex: 1; padding: 16px 24px; background: var(--red); color: var(--white); border: 2px solid var(--red); border-radius: 8px; font-size: 15px; font-weight: 800; font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; box-shadow: 4px 4px 0 var(--dark); transition: transform 0.15s, box-shadow 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-next:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--dark); }
+.btn-next:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.btn-back { padding: 16px 20px; background: transparent; color: var(--dark); border: 2px solid var(--dark); border-radius: 8px; font-size: 15px; font-weight: 800; font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; box-shadow: 4px 4px 0 var(--tan); transition: transform 0.15s, box-shadow 0.15s; }
+.btn-back:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--tan); }
+
+/* SUCCESS */
+.success-box { display: none; text-align: center; padding: 56px 32px; animation: stepIn 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+.success-icon { font-size: 80px; margin-bottom: 24px; }
+.success-tag { display: inline-block; background: var(--green); color: var(--white); font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; padding: 5px 14px; border-radius: 4px; margin-bottom: 20px; }
+.success-h { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px,7vw,72px); line-height: 0.9; color: var(--dark); letter-spacing: 2px; margin-bottom: 16px; }
+.success-h .green { color: var(--green); }
+.success-p { font-size: 16px; color: var(--muted); line-height: 1.75; max-width: 420px; margin: 0 auto 32px; }
+.success-back { display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; background: var(--dark); color: var(--white); border-radius: 8px; border: 2px solid var(--dark); font-size: 14px; font-weight: 800; text-decoration: none; box-shadow: 4px 4px 0 var(--tan); transition: transform 0.15s, box-shadow 0.15s; }
+.success-back:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--tan); }
+
+/* FORM CARD */
+.form-card { background: var(--white); border: 2px solid var(--dark); border-radius: 16px; box-shadow: 6px 6px 0 var(--dark); padding: 40px 36px 36px; margin-bottom: 24px; }
+
+/* FOOTER */
+footer { background: var(--dark); padding: 32px 48px; border-top: 2px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; }
+.footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 3px; color: var(--white); }
+.footer-logo span { color: var(--red); }
+.footer-info { font-size: 12px; color: rgba(255,255,255,0.25); line-height: 1.6; text-align: right; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  header { padding: 0 20px; height: 56px; }
+  .form-hero { padding: 44px 24px 40px; }
+  .progress-wrap { padding: 0 20px; top: 56px; }
+  .form-container { padding: 40px 20px 60px; }
+  .field-group.half-row { grid-template-columns: 1fr; }
+  .pill-group.col2 { grid-template-columns: 1fr; }
+  .form-card { padding: 28px 20px; }
+  footer { flex-direction: column; gap: 12px; padding: 28px 24px; }
+  .footer-info { text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-track">
+    <span>더박스 상담 신청</span><span class="dot">·</span>
+    <span>TheBox Busan</span><span class="dot">·</span>
+    <span>Korean Community</span><span class="dot">·</span>
+    <span>English Academy</span><span class="dot">·</span>
+    <span>더박스 상담 신청</span><span class="dot">·</span>
+    <span>TheBox Busan</span><span class="dot">·</span>
+    <span>Korean Community</span><span class="dot">·</span>
+    <span>English Academy</span><span class="dot">·</span>
+    <span>더박스 상담 신청</span><span class="dot">·</span>
+    <span>TheBox Busan</span><span class="dot">·</span>
+    <span>Korean Community</span><span class="dot">·</span>
+    <span>English Academy</span><span class="dot">·</span>
+    <span>더박스 상담 신청</span><span class="dot">·</span>
+    <span>TheBox Busan</span><span class="dot">·</span>
+    <span>Korean Community</span><span class="dot">·</span>
+    <span>English Academy</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <a href="#" class="logo">
+    <div class="logo-badge">📦</div>
+    THE<span style="color:var(--red)">BOX</span>
+  </a>
+  <div class="header-right">한국인 멤버 사전 상담지</div>
+</header>
+
+<!-- HERO BANNER -->
+<section class="form-hero">
+  <div class="hero-inner">
+    <div class="hero-tag">
+      <span class="hero-dot"></span>
+      사전 상담 설문
+    </div>
+    <h1 class="hero-h1">
+      CONSULTATION<br>
+      <span class="red">FORM</span>
+    </h1>
+    <p class="hero-ko">더박스 한국인 멤버 상담지</p>
+    <p class="hero-desc">
+      안녕하세요! <strong>더박스</strong>에 관심 가져주셔서 감사합니다.<br>
+      상담 전 기본 정보를 확인하기 위한 사전 설문입니다.<br>
+      <strong>원활한 상담과 반 배정</strong>을 위해 기본 정보, 영어 학습 배경,<br>
+      가능한 시간대를 간단히 체크해주세요.
+    </p>
+    <div class="hero-notice">
+      📸 <strong>사진 촬영 안내</strong> — 더박스에서는 수업 및 행사 기록을 위해 사진 촬영이 이루어질 수 있으며, 일부 사진은 더박스 SNS 및 홍보 자료에 활용될 수 있습니다.
+    </div>
+  </div>
+</section>
+
+<!-- PROGRESS BAR -->
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <div class="prog-steps">
+      <div class="prog-step active" id="ps-1"><div class="prog-step-num">1</div></div>
+      <div class="prog-sep" id="sep-1"></div>
+      <div class="prog-step" id="ps-2"><div class="prog-step-num">2</div></div>
+      <div class="prog-sep" id="sep-2"></div>
+      <div class="prog-step" id="ps-3"><div class="prog-step-num">3</div></div>
+      <div class="prog-sep" id="sep-3"></div>
+      <div class="prog-step" id="ps-4"><div class="prog-step-num">4</div></div>
+    </div>
+    <div class="prog-label" id="prog-label">Step 1 / 4</div>
+  </div>
+</div>
+
+<!-- MAIN FORM -->
+<div class="form-container">
+
+  <!-- STEP 1: 기본 정보 -->
+  <div class="form-step active" id="step-1">
+    <div class="step-head">
+      <div class="step-tag">Step 1 — 기본 정보</div>
+      <h2 class="step-h2">누구세요,<br><span class="red">반가워요!</span></h2>
+      <p class="step-sub">기본 정보를 알려주세요. <span style="color:var(--red)">*</span> 표시는 필수 항목입니다.</p>
+    </div>
+
+    <div class="form-card">
+      <div class="field-group half-row">
+        <div>
+          <label class="field-label" for="s1-name">이름<span class="req">*</span></label>
+          <input class="field-input" id="s1-name" type="text" placeholder="예: 김하나">
+        </div>
+        <div>
+          <label class="field-label" for="s1-birth">생년월일<span class="req">*</span></label>
+          <input class="field-input" id="s1-birth" type="text" placeholder="예: 2003.03.30">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="s1-contact">연락처<span class="req">*</span></label>
+        <input class="field-input" id="s1-contact" type="tel" placeholder="예: 010-1234-1234">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="s1-region">거주지역<span class="req">*</span></label>
+        <input class="field-input" id="s1-region" type="text" placeholder="예: 전포동 / 연산동 / 우동">
+        <p class="field-hint">동까지만 작성 부탁드립니다.</p>
+      </div>
+
+      <hr class="form-divider">
+
+      <div class="field-group">
+        <label class="field-label">보유한 어학 성적이 있나요?<span class="req">*</span></label>
+        <div class="pill-group">
+          <div class="pill-item red-pill">
+            <input type="radio" id="score-yes" name="score" value="예">
+            <label for="score-yes"><span class="pill-emoji">📄</span> 예, 있어요</label>
+          </div>
+          <div class="pill-item red-pill">
+            <input type="radio" id="score-no" name="score" value="아니요">
+            <label for="score-no"><span class="pill-emoji">🙅</span> 아니요</label>
+          </div>
+        </div>
+        <div class="cond-field" id="score-detail-wrap" style="display:none">
+          <label class="field-label" for="s1-score-detail">어학 성적 입력</label>
+          <input class="field-input" id="s1-score-detail" type="text" placeholder="예: TOEIC 750, OPIC IH 등">
+        </div>
+      </div>
+    </div>
+
+    <div id="err-1" class="field-error">⚠️ 필수 항목을 모두 입력해주세요.</div>
+    <div class="btn-row">
+      <button class="btn-next" onclick="nextStep(1)">다음 단계 →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: 배경 정보 -->
+  <div class="form-step" id="step-2">
+    <div class="step-head">
+      <div class="step-tag">Step 2 — 배경 정보</div>
+      <h2 class="step-h2">어떻게<br><span class="red">오셨나요?</span></h2>
+      <p class="step-sub">더박스를 알게 된 경로와 해외 경험을 알려주세요.</p>
+    </div>
+
+    <div class="form-card">
+      <div class="field-group">
+        <label class="field-label">더박스를 처음 알게 된 경로<span class="req">*</span></label>
+        <div class="pill-group col2">
+          <div class="pill-item red-pill"><input type="radio" id="src-insta" name="source" value="인스타그램"><label for="src-insta"><span class="pill-emoji">📸</span> 인스타그램</label></div>
+          <div class="pill-item red-pill"><input type="radio" id="src-naver" name="source" value="네이버"><label for="src-naver"><span class="pill-emoji">🔍</span> 네이버</label></div>
+          <div class="pill-item red-pill"><input type="radio" id="src-friend" name="source" value="지인소개"><label for="src-friend"><span class="pill-emoji">🤝</span> 지인 소개</label></div>
+          <div class="pill-item red-pill"><input type="radio" id="src-walk" name="source" value="지나가다 보고"><label for="src-walk"><span class="pill-emoji">🚶</span> 지나가다 보고</label></div>
+          <div class="pill-item red-pill"><input type="radio" id="src-member" name="source" value="기존 회원 추천"><label for="src-member"><span class="pill-emoji">⭐</span> 기존 회원 추천</label></div>
+          <div class="pill-item red-pill"><input type="radio" id="src-other" name="source" value="기타"><label for="src-other"><span class="pill-emoji">💬</span> 기타</label></div>
+        </div>
+        <div class="cond-field" id="src-other-wrap" style="display:none">
+          <input class="field-input" id="s2-source-other" type="text" placeholder="어디서 알게 되셨나요?">
+        </div>
+      </div>
+
+      <hr class="form-divider">
+
+      <div class="field-group">
+        <label class="field-label">해외 거주 또는 영어 노출 경험<span class="req">*</span></label>
+        <div class="pill-group">
+          <div class="pill-item red-pill"><input type="radio" id="abroad-yes" name="abroad" value="있다"><label for="abroad-yes"><span class="pill-emoji">✈️</span> 있어요</label></div>
+          <div class="pill-item red-pill"><input type="radio" id="abroad-no" name="abroad" value="없다"><label for="abroad-no"><span class="pill-emoji">🏠</span> 없어요</label></div>
+        </div>
+        <div class="cond-field" id="abroad-detail-wrap" style="display:none">
+          <label class="field-label" for="s2-abroad-detail">어디서, 얼마나, 어떤 목적으로?</label>
+          <textarea class="field-textarea" id="s2-abroad-detail" placeholder="예: 미국 1년 어학연수, 캐나다 워킹홀리데이 6개월 등" style="min-height:80px;"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div id="err-2" class="field-error">⚠️ 필수 항목을 모두 선택해주세요.</div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="prevStep(2)">← 이전</button>
+      <button class="btn-next" onclick="nextStep(2)">다음 단계 →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: 영어 학습 & 수준 -->
+  <div class="form-step" id="step-3">
+    <div class="step-head">
+      <div class="step-tag">Step 3 — 영어 학습 & 수준</div>
+      <h2 class="step-h2">영어 실력이<br><span class="red">궁금해요!</span></h2>
+      <p class="step-sub">현재 영어 수준과 학습 목적을 알려주시면 최적의 반을 배정해 드립니다.</p>
+    </div>
+
+    <div class="form-card">
+      <div class="field-group">
+        <label class="field-label">영어회화 수업 / 스터디 경험<span class="req">*</span></label>
+        <div class="pill-group col2">
+          <div class="pill-item red-pill"><input type="radio" id="exp-study" name="exp" value="스터디 경험이 있다"><label for="exp-study"><span class="pill-emoji">📚</span> 스터디 경험 있음</label></div>
+          <div class="pill-item red-pill"><input type="radio" id="exp-academy" name="exp" value="영어학원/회화수업 경험이 있다"><label for="exp-academy"><span class="pill-emoji">🏫</span> 학원 / 회화수업 경험 있음</label></div>
+          <div class="pill-item red-pill"><input type="radio" id="exp-self" name="exp" value="혼자 공부해봤다"><label for="exp-self"><span class="pill-emoji">💻</span> 혼자 공부해봤음</label></div>
+          <div class="pill-item red-pill"><input type="radio" id="exp-none" name="exp" value="없다"><label for="exp-none"><span class="pill-emoji">🙈</span> 없음</label></div>
+        </div>
+      </div>
+
+      <hr class="form-divider">
+
+      <div class="field-group">
+        <label class="field-label">영어 공부하는 이유<span class="req">*</span> <span class="opt">(복수 선택 가능)</span></label>
+        <div class="pill-group col2">
+          <div class="pill-item red-pill"><input type="checkbox" id="pur-basic" name="purpose" value="회화 기초"><label for="pur-basic"><span class="pill-emoji">🌱</span> 회화 기초</label></div>
+          <div class="pill-item red-pill"><input type="checkbox" id="pur-native" name="purpose" value="원어민과 자연스럽게 대화"><label for="pur-native"><span class="pill-emoji">🗣️</span> 원어민과 자연스럽게</label></div>
+          <div class="pill-item red-pill"><input type="checkbox" id="pur-travel" name="purpose" value="여행영어"><label for="pur-travel"><span class="pill-emoji">✈️</span> 여행영어</label></div>
+          <div class="pill-item red-pill"><input type="checkbox" id="pur-job" name="purpose" value="취업/직장"><label for="pur-job"><span class="pill-emoji">💼</span> 취업 / 직장</label></div>
+          <div class="pill-item red-pill"><input type="checkbox" id="pur-exam" name="purpose" value="시험 준비"><label for="pur-exam"><span class="pill-emoji">📝</span> 시험 준비</label></div>
+          <div class="pill-item red-pill"><input type="checkbox" id="pur-hobby" name="purpose" value="취미/자기계발"><label for="pur-hobby"><span class="pill-emoji">🌟</span> 취미 / 자기계발</label></div>
+          <div class="pill-item red-pill"><input type="checkbox" id="pur-other-chk" name="purpose" value="기타"><label for="pur-other-chk"><span class="pill-emoji">💬</span> 기타</label></div>
+        </div>
+        <div class="cond-field" id="pur-other-wrap" style="display:none">
+          <input class="field-input" id="s3-pur-other" type="text" placeholder="기타 목적을 입력해주세요">
+        </div>
+      </div>
+
+      <hr class="form-divider">
+
+      <div class="field-group">
+        <label class="field-label">현재 영어 수준<span class="req">*</span></label>
+        <div class="pill-group">
+          <div class="pill-item red-pill"><input type="radio" id="lv-0" name="level" value="왕초보"><label for="lv-0">🐣 왕초보</label></div>
+          <div class="pill-item red-pill"><input type="radio" id="lv-1" name="level" value="초급"><label for="lv-1">🌱 초급</label></div>
+          <div class="pill-item red-pill"><input type="radio" id="lv-2" name="level" value="중급"><label for="lv-2">📈 중급</label></div>
+          <div class="pill-item red-pill"><input type="radio" id="lv-3" name="level" value="고급"><label for="lv-3">🔥 고급</label></div>
+          <div class="pill-item red-pill"><input type="radio" id="lv-4" name="level" value="원어민 프리토킹 가능"><label for="lv-4">⚡ 프리토킹</label></div>
+        </div>
+      </div>
+
+      <hr class="form-divider">
+
+      <div class="field-group">
+        <label class="field-label">영어로 말할 때 가장 어려운 점 <span class="opt">(복수 선택)</span></label>
+        <div class="pill-group col2">
+          <div class="pill-item red-pill"><input type="checkbox" id="diff-1" name="difficulty" value="문장이 잘 안 만들어진다"><label for="diff-1"><span class="pill-emoji">🤔</span> 문장 구성이 어려움</label></div>
+          <div class="pill-item red-pill"><input type="checkbox" id="diff-2" name="difficulty" value="단어가 부족하다"><label for="diff-2"><span class="pill-emoji">📖</span> 단어가 부족함</label></div>
+          <div class="pill-item red-pill"><input type="checkbox" id="diff-3" name="difficulty" value="듣기가 어렵다"><label for="diff-3"><span class="pill-emoji">👂</span> 듣기가 어려움</label></div>
+          <div class="pill-item red-pill"><input type="checkbox" id="diff-4" name="difficulty" value="자신감이 없다"><label for="diff-4"><span class="pill-emoji">😰</span> 자신감 부족</label></div>
+          <div class="pill-item red-pill"><input type="checkbox" id="diff-5" name="difficulty" value="프리토킹이 어렵다"><label for="diff-5"><span class="pill-emoji">💬</span> 프리토킹이 어려움</label></div>
+          <div class="pill-item red-pill"><input type="checkbox" id="diff-6" name="difficulty" value="문법이나 구동사를 모른다"><label for="diff-6"><span class="pill-emoji">📐</span> 문법 / 구동사</label></div>
+          <div class="pill-item red-pill"><input type="checkbox" id="diff-7" name="difficulty" value="기타"><label for="diff-7"><span class="pill-emoji">➕</span> 기타</label></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="err-3" class="field-error">⚠️ 필수 항목을 모두 선택해주세요.</div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="prevStep(3)">← 이전</button>
+      <button class="btn-next" onclick="nextStep(3)">다음 단계 →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: 일정 & 마무리 -->
+  <div class="form-step" id="step-4">
+    <div class="step-head">
+      <div class="step-tag">Step 4 — 일정 & 관심 과정</div>
+      <h2 class="step-h2">마지막<br><span class="red">단계예요!</span></h2>
+      <p class="step-sub">가능한 시간과 관심 과정을 선택해주세요.</p>
+    </div>
+
+    <div class="form-card">
+      <div class="field-group">
+        <label class="field-label">가능한 시간 <span class="opt">(복수 선택)</span></label>
+        <div class="pill-group col2">
+          <div class="pill-item red-pill"><input type="checkbox" id="sch-1" name="schedule" value="오전 가능"><label for="sch-1"><span class="pill-emoji">🌅</span> 오전 가능</label></div>
+          <div class="pill-item red-pill"><input type="checkbox" id="sch-2" name="schedule" value="월수 저녁 가능"><label for="sch-2"><span class="pill-emoji">🌙</span> 월수 저녁 가능</label></div>
+          <div class="pill-item red-pill"><input type="checkbox" id="sch-3" name="schedule" value="화목 저녁 가능"><label for="sch-3"><span class="pill-emoji">🌙</span> 화목 저녁 가능</label></div>
+          <div class="pill-item red-pill"><input type="checkbox" id="sch-4" name="schedule" value="주말 가능"><label for="sch-4"><span class="pill-emoji">🎉</span> 주말 가능</label></div>
+          <div class="pill-item red-pill"><input type="checkbox" id="sch-5" name="schedule" value="시간 조정 가능"><label for="sch-5"><span class="pill-emoji">🔄</span> 시간 조정 가능</label></div>
+        </div>
+      </div>
+
+      <hr class="form-divider">
+
+      <div class="field-group">
+        <label class="field-label">현재 더 관심 있는 과정</label>
+        <div class="pill-group">
+          <div class="pill-item red-pill"><input type="radio" id="prog-1" name="program" value="아카데미"><label for="prog-1"><span class="pill-emoji">🏫</span> 아카데미</label></div>
+          <div class="pill-item red-pill"><input type="radio" id="prog-2" name="program" value="스터디"><label for="prog-2"><span class="pill-emoji">📚</span> 스터디</label></div>
+          <div class="pill-item red-pill"><input type="radio" id="prog-3" name="program" value="상담 후 결정"><label for="prog-3"><span class="pill-emoji">💭</span> 상담 후 결정</label></div>
+        </div>
+      </div>
+
+      <hr class="form-divider">
+
+      <div class="field-group">
+        <label class="field-label" for="s4-notes">기타 문의 / 상담 시 참고 사항 <span class="opt">(선택)</span></label>
+        <textarea class="field-textarea" id="s4-notes" placeholder="궁금하신 점이나 상담 시 참고할 내용을 자유롭게 적어주세요 😊"></textarea>
+      </div>
+    </div>
+
+    <div id="err-4" class="field-error">⚠️ 오류가 발생했습니다. 다시 시도해주세요.</div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="prevStep(4)">← 이전</button>
+      <button class="btn-next" id="submit-btn" onclick="submitForm()">상담 신청 완료 ✓</button>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success-box" id="success-box">
+    <div class="success-icon">🎉</div>
+    <div class="success-tag">신청 완료</div>
+    <h2 class="success-h">신청이<br><span class="green">완료됐어요!</span></h2>
+    <p class="success-p">
+      소중한 정보 감사합니다.<br>
+      더박스 팀이 곧 연락드릴게요! 🙌<br><br>
+      문의: <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="11736462707f657974737e6951767c70787d3f727e7c">[email&#160;protected]</a></strong>
+    </p>
+    <a href="#" class="success-back" onclick="location.reload(); return false;">← 처음으로 돌아가기</a>
+  </div>
+
+</div><!-- /form-container -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">THE<span>BOX</span> 📦</div>
+  <div class="footer-info"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3b594e485a554f535e5954437b5c565a525715585456">[email&#160;protected]</a><br>© 2025 TheBox Korean Community Busan</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ─────────────────────────────────────────────────────────────
+//  ✅ 배포 후 Google Apps Script 웹 앱 URL을 여기에 붙여넣으세요
+// ─────────────────────────────────────────────────────────────
+const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+
+// ─── STEP NAVIGATION ───────────────────────────────────────
+const TOTAL = 4;
+
+function goStep(n) {
+  document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('step-' + n);
+  if (el) el.classList.add('active');
+  for (let i = 1; i <= TOTAL; i++) {
+    const ps = document.getElementById('ps-' + i);
+    ps.classList.remove('active','done');
+    if (i < n) ps.classList.add('done');
+    else if (i === n) ps.classList.add('active');
+    if (i < TOTAL) document.getElementById('sep-' + i).classList.toggle('done', i < n);
+  }
+  document.getElementById('prog-label').textContent = 'Step ' + n + ' / ' + TOTAL;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function nextStep(step) {
+  const err = document.getElementById('err-' + step);
+  err.style.display = 'none';
+  if (step === 1) {
+    if (!v('s1-name') || !v('s1-birth') || !v('s1-contact') || !v('s1-region')) { err.style.display='block'; return; }
+    const score = document.querySelector('input[name="score"]:checked');
+    if (!score) { err.style.display='block'; return; }
+    if (score.value === '예' && !v('s1-score-detail')) { err.style.display='block'; return; }
+  }
+  if (step === 2) {
+    if (!document.querySelector('input[name="source"]:checked') ||
+        !document.querySelector('input[name="abroad"]:checked')) { err.style.display='block'; return; }
+  }
+  if (step === 3) {
+    if (!document.querySelector('input[name="exp"]:checked') ||
+        !document.querySelectorAll('input[name="purpose"]:checked').length ||
+        !document.querySelector('input[name="level"]:checked')) { err.style.display='block'; return; }
+  }
+  goStep(step + 1);
+}
+
+function prevStep(step) { goStep(step - 1); }
+
+// ─── CONDITIONAL FIELDS ───────────────────────────────────
+document.querySelectorAll('input[name="score"]').forEach(r =>
+  r.addEventListener('change', () => {
+    document.getElementById('score-detail-wrap').style.display = r.value==='예'?'block':'none';
+  })
+);
+document.querySelectorAll('input[name="abroad"]').forEach(r =>
+  r.addEventListener('change', () => {
+    document.getElementById('abroad-detail-wrap').style.display = r.value==='있다'?'block':'none';
+  })
+);
+document.querySelectorAll('input[name="source"]').forEach(r =>
+  r.addEventListener('change', () => {
+    document.getElementById('src-other-wrap').style.display = r.value==='기타'&&r.checked?'block':'none';
+  })
+);
+document.getElementById('pur-other-chk').addEventListener('change', function() {
+  document.getElementById('pur-other-wrap').style.display = this.checked?'block':'none';
+});
+
+// ─── SUBMIT ───────────────────────────────────────────────
+async function submitForm() {
+  const err = document.getElementById('err-4');
+  err.style.display = 'none';
+  const btn = document.getElementById('submit-btn');
+
+  const srcEl = document.querySelector('input[name="source"]:checked');
+  const srcVal = srcEl?.value==='기타' ? '기타: '+v('s2-source-other') : (srcEl?.value||'');
+  const purposes = [...document.querySelectorAll('input[name="purpose"]:checked')].map(i=>i.value);
+  const purFinal = purposes.includes('기타')
+    ? [...purposes.filter(p=>p!=='기타'), '기타: '+v('s3-pur-other')]
+    : purposes;
+
+  const data = {
+    이름: v('s1-name'),
+    생년월일: v('s1-birth'),
+    연락처: v('s1-contact'),
+    거주지역: v('s1-region'),
+    어학성적: document.querySelector('input[name="score"]:checked')?.value||'',
+    어학성적상세: v('s1-score-detail'),
+    유입경로: srcVal,
+    해외경험: document.querySelector('input[name="abroad"]:checked')?.value||'',
+    해외경험상세: v('s2-abroad-detail'),
+    수업경험: document.querySelector('input[name="exp"]:checked')?.value||'',
+    공부목적: purFinal.join(', '),
+    영어수준: document.querySelector('input[name="level"]:checked')?.value||'',
+    어려운점: [...document.querySelectorAll('input[name="difficulty"]:checked')].map(i=>i.value).join(', '),
+    가능한시간: [...document.querySelectorAll('input[name="schedule"]:checked')].map(i=>i.value).join(', '),
+    관심과정: document.querySelector('input[name="program"]:checked')?.value||'',
+    기타메모: v('s4-notes'),
+    제출시각: new Date().toLocaleString('ko-KR',{timeZone:'Asia/Seoul'})
+  };
+
+  btn.textContent = '전송 중...';
+  btn.disabled = true;
+
+  try {
+    await fetch(SCRIPT_URL, {
+      method: 'POST', mode: 'no-cors',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(data)
+    });
+    document.querySelectorAll('.form-step').forEach(s=>s.classList.remove('active'));
+    document.getElementById('success-box').style.display = 'block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  } catch(e) {
+    err.textContent = '⚠️ 전송 중 오류가 발생했습니다. 다시 시도해주세요.';
+    err.style.display = 'block';
+    btn.textContent = '상담 신청 완료 ✓';
+    btn.disabled = false;
+  }
+}
+
+function v(id) { const el=document.getElementById(id); return el?el.value.trim():''; }
+</script>
+
+
+<!--
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  📋 기존 Google Sheets 연동 설정 (3단계!)
+  🔗 시트: 1SOqZpqxHZyUL-446A_8z0sw0OB2BrxrtXS_hHW3C6n8 / gid=356538410
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+── STEP 1. 해당 시트 1행에 헤더 입력 ────────────────────────
+   A:이름 / B:생년월일 / C:연락처 / D:거주지역 / E:어학성적
+   F:어학성적상세 / G:유입경로 / H:해외경험 / I:해외경험상세
+   J:수업경험 / K:공부목적 / L:영어수준 / M:어려운점
+   N:가능한시간 / O:관심과정 / P:기타메모 / Q:제출시각
+
+── STEP 2. 스프레드시트 > 확장 프로그램 > Apps Script ────────
+   아래 코드 전체를 붙여넣고 저장 (Ctrl+S):
+
+   function doPost(e) {
+     try {
+       const ss = SpreadsheetApp.openById('1SOqZpqxHZyUL-446A_8z0sw0OB2BrxrtXS_hHW3C6n8');
+       const sheet = ss.getSheets().find(s => s.getSheetId() === 356538410) || ss.getActiveSheet();
+       const data = JSON.parse(e.postData.contents);
+       sheet.appendRow([
+         data.이름, data.생년월일, data.연락처, data.거주지역,
+         data.어학성적, data.어학성적상세, data.유입경로,
+         data.해외경험, data.해외경험상세, data.수업경험,
+         data.공부목적, data.영어수준, data.어려운점,
+         data.가능한시간, data.관심과정, data.기타메모, data.제출시각
+       ]);
+       return ContentService.createTextOutput(JSON.stringify({result:'success'}))
+         .setMimeType(ContentService.MimeType.JSON);
+     } catch(err) {
+       return ContentService.createTextOutput(JSON.stringify({result:'error',message:err.toString()}))
+         .setMimeType(ContentService.MimeType.JSON);
+     }
+   }
+
+── STEP 3. 웹 앱 배포 후 URL 붙여넣기 ──────────────────────
+   → 상단 "배포" > "새 배포" > 유형: 웹 앱
+   → 실행 계정: 나  /  액세스 권한: 모든 사용자
+   → "배포" 클릭 → URL 복사
+   → 이 파일에서 아래 줄에 붙여넣기:
+       const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+   → 저장 & 업로드하면 끝! 🎉
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-->
+
+</body>
+</html>
