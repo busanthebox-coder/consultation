@@ -1173,25 +1173,33 @@
         ? [...purposes.filter(p => p !== '기타'), '기타: ' + v('s3-pur-other')]
         : purposes;
 
-      // ★ 키 이름을 Apps Script의 doPost와 정확히 일치하도록 맞춤
+      const now = new Date();
+      const timestamp = now.getFullYear() + '-' + 
+                        String(now.getMonth() + 1).padStart(2, '0') + '-' + 
+                        String(now.getDate()).padStart(2, '0') + ' ' + 
+                        String(now.getHours()).padStart(2, '0') + ':' + 
+                        String(now.getMinutes()).padStart(2, '0') + ':' + 
+                        String(now.getSeconds()).padStart(2, '0');
+
+      // ★ 사용자가 요청한 17개 항목 순서 및 헤더 이름과 정확히 일치하도록 수정
       const data = {
-        이름: v('s1-name'),
-        생년월일: v('s1-birth'),
-        연락처: v('s1-contact'),
-        거주지역: v('s1-region'),
-        어학성적: document.querySelector('input[name="score"]:checked')?.value || '',
-        어학성적상세: v('s1-score-detail'),
-        유입경로: srcVal,
-        해외경험: document.querySelector('input[name="abroad"]:checked')?.value || '',
-        해외경험상세: v('s2-abroad-detail'),
-        수업경험: document.querySelector('input[name="exp"]:checked')?.value || '',
-        공부목적: purFinal.join(', '),
-        영어수준: document.querySelector('input[name="level"]:checked')?.value || '',
-        어려운점: [...document.querySelectorAll('input[name="difficulty"]:checked')].map(i => i.value).join(', '),
-        가능한시간: [...document.querySelectorAll('input[name="schedule"]:checked')].map(i => i.value).join(', '),
-        관심과정: document.querySelector('input[name="program"]:checked')?.value || '',
-        기타메모: v('s4-notes'),
-        제출시각: new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })
+        "타임스탬프": timestamp,
+        "이름": v('s1-name'),
+        "생년월일": v('s1-birth'),
+        "연락처": v('s1-contact'),
+        "거주지역": v('s1-region'),
+        "보유한 어학 성적이 있나요?": document.querySelector('input[name="score"]:checked')?.value || '',
+        "어학 성적이 있다면 적어주세요.": v('s1-score-detail'),
+        "더박스를 처음 알게 된 경로는 무엇인가요?": srcVal,
+        "해외 거주 또는 영어 노출 경험이 있나요?": document.querySelector('input[name="abroad"]:checked')?.value || '',
+        "해외 거주 또는 영어 노출 경험이 있다면 어디서 얼마나 어떤 목적으로 있으셨나요?": v('s2-abroad-detail'),
+        "영어회화 수업을 들어본 적이 있나요?": document.querySelector('input[name="exp"]:checked')?.value || '',
+        "영어 공부하는 이유를 모두 선택해주세요. (복수가능)": purFinal.join(', '),
+        "본인이 생각하는 현재 영어 수준은 어느 정도인가요?": document.querySelector('input[name="level"]:checked')?.value || '',
+        "영어로 말할 때 가장 어려운 점은 무엇인가요? (복수 가능)": [...document.querySelectorAll('input[name="difficulty"]:checked')].map(i => i.value).join(', '),
+        "가능한 시간을 모두 선택해주세요. (복수 가능)": [...document.querySelectorAll('input[name="schedule"]:checked')].map(i => i.value).join(', '),
+        "현재 더 관심 있는 과정은 무엇인가요?": document.querySelector('input[name="program"]:checked')?.value || '',
+        "이외에 궁금하신 점이나, 상담시 참고할 내용 있으면 자유롭게 적어주시면 감사하겠습니다.": v('s4-notes')
       };
 
       btn.textContent = '전송 중...';
