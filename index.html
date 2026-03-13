@@ -651,8 +651,69 @@
       font-size: 16px;
       color: var(--muted);
       line-height: 1.75;
-      max-width: 420px;
-      margin: 0 auto 32px;
+      max-width: 520px;
+      margin: 0 auto 28px;
+    }
+
+    .success-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 0 auto 20px;
+      max-width: 540px;
+    }
+
+    .success-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 24px;
+      min-width: 220px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform .15s, box-shadow .15s;
+    }
+
+    .success-btn.primary {
+      background: var(--red);
+      color: #fff;
+      border: 2px solid var(--red);
+      box-shadow: 4px 4px 0 var(--dark);
+    }
+
+    .success-btn.primary:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--dark);
+    }
+
+    .success-btn.secondary {
+      background: var(--white);
+      color: var(--dark);
+      border: 2px solid var(--dark);
+      box-shadow: 4px 4px 0 var(--tan);
+    }
+
+    .success-btn.secondary:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--tan);
+    }
+
+    .success-help {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 520px;
+      margin: 0 auto 26px;
+    }
+
+    .success-help a {
+      color: var(--red);
+      font-weight: 800;
+      text-decoration: none;
     }
 
     .success-back {
@@ -752,6 +813,15 @@
         padding: 28px 20px;
       }
 
+      .success-actions {
+        flex-direction: column;
+      }
+
+      .success-btn {
+        width: 100%;
+        min-width: 0;
+      }
+
       footer {
         flex-direction: column;
         gap: 12px;
@@ -778,7 +848,6 @@
       <span>ENGLISH ACADEMY</span><span class="dot">·</span>
       <span>TheBox Busan</span><span class="dot">·</span>
       <span>Korean Community</span><span class="dot">·</span>
-      <!-- duplicate for seamless loop -->
       <span>더박스 상담 신청</span><span class="dot">·</span>
       <span>ENGLISH ACADEMY</span><span class="dot">·</span>
       <span>TheBox Busan</span><span class="dot">·</span>
@@ -792,11 +861,11 @@
 
   <!-- HEADER -->
   <header>
-    <a href="#" class="logo">
+    <a href="https://busanthebox-coder.github.io/thebox/intro/" class="logo" target="_blank" rel="noopener">
       <div class="logo-badge">📦</div>
       THE<span style="color:var(--red)">BOX</span>
     </a>
-    <div class="header-right">한국인 멤버 사전 상담지</div>
+    <div class="header-right" id="header-right-text">한국인 멤버 사전 상담지</div>
   </header>
 
   <!-- HERO -->
@@ -815,7 +884,7 @@
   </section>
 
   <!-- PROGRESS -->
-  <div class="progress-wrap">
+  <div class="progress-wrap" id="progress-wrap">
     <div class="progress-inner">
       <div class="prog-steps">
         <div class="prog-step active" id="ps-1">
@@ -1079,12 +1148,13 @@
 
     <!-- SUCCESS -->
     <div class="success-box" id="success-box">
-      <div class="success-icon">🎉</div>
-      <div class="success-tag">신청 완료</div>
-      <h2 class="success-h">신청이<br><span class="green">완료됐어요!</span></h2>
-      <p class="success-p">소중한 정보 감사합니다.<br>더박스 팀이 곧 연락드릴게요! 🙌<br><br>문의: <strong>busanthebox@gmail.com</strong></p>
+      <div class="success-icon" id="success-icon">🎉</div>
+      <div class="success-tag" id="success-tag">신청 완료</div>
+      <h2 class="success-h" id="success-title">신청이<br><span class="green">완료됐어요!</span></h2>
+      <p class="success-p" id="success-desc"></p>
+      <div class="success-actions" id="success-actions"></div>
+      <p class="success-help" id="success-help"></p>
       <a href="#" class="success-back" onclick="location.reload();return false;">← 처음으로 돌아가기</a>
-      <!-- 사진 촬영 면책 안내 -->
       <p class="photo-disclaimer">상담 후 멤버가 되실 경우, 수업이나 행사 중 사진 촬영이 있을 수 있으며 SNS 및 홍보에 활용될 수 있습니다.</p>
     </div>
 
@@ -1093,27 +1163,95 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-logo">THE<span>BOX</span> 📦</div>
-    <div class="footer-info">busanthebox@gmail.com<br>© 2025 TheBox Korean Community Busan</div>
+    <div class="footer-info">busanthebox@gmail.com<br>© 2026 TheBox Korean Community Busan</div>
   </footer>
 
   <script>
     // ★ Apps Script 웹 앱 URL
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxIleEdbHQCKnrL4pBVzfYgvmAjaw57xYNTGpaCZie_xJ8_2COZ41O7du5HVr8LUWqt/exec';
 
+    // light / detail / confirmed 중 하나
+    const SUCCESS_MODE = 'light';
+
+    const PAGE_LINKS = {
+      intro: 'https://busanthebox-coder.github.io/thebox/intro/',
+      first: 'https://busanthebox-coder.github.io/thebox/first/index.html'
+    };
+
+    const SUCCESS_CONTENT = {
+      light: {
+        icon: '🎉',
+        tag: '작성 완료',
+        title: '상담지 작성이<br><span class="green">완료됐어요!</span>',
+        desc: '상담지 작성 감사합니다.<br>네이버로 주신 상담 예약 시간에 맞춰 방문해 주세요.<br>오기 전에 더박스 분위기를 가볍게 보고 오시면 더 편하게 이야기 나눌 수 있어요.',
+        buttons: [
+          { text: '더박스 가볍게 보기', href: PAGE_LINKS.intro, type: 'primary' },
+          { text: '프로그램 자세히 보기', href: PAGE_LINKS.first, type: 'secondary' }
+        ],
+        help: '가볍게 둘러보는 정도면 충분해요. 자세한 내용은 상담 때 설명드리겠습니다 :)'
+      },
+      detail: {
+        icon: '📘',
+        tag: '작성 완료',
+        title: '상담지 작성이<br><span class="green">완료됐어요!</span>',
+        desc: '상담지 작성 감사합니다.<br>네이버로 주신 상담 예약 시간에 맞춰 방문해 주세요.<br>오기 전에 아카데미와 스터디 차이, 진행 방식 등을 미리 보고 오시면 상담이 더 편해져요.',
+        buttons: [
+          { text: '프로그램 자세히 보기', href: PAGE_LINKS.first, type: 'primary' },
+          { text: '더박스 분위기 먼저 보기', href: PAGE_LINKS.intro, type: 'secondary' }
+        ],
+        help: '가볍게 훑어보는 정도면 충분해요. 자세한 내용은 상담 때 설명드리겠습니다 :)'
+      },
+      confirmed: {
+        icon: '✅',
+        tag: '방문 안내',
+        title: '작성 완료!<br><span class="green">이따 뵐게요 :)</span>',
+        desc: '상담지 작성 감사합니다.<br>네이버로 주신 상담 예약 시간에 맞춰 방문해 주세요.<br>오시기 전에 아래 페이지를 가볍게 보고 오시면 더박스 분위기와 시스템을 미리 이해하는 데 도움이 돼요.',
+        buttons: [
+          { text: '더박스 소개 보기', href: PAGE_LINKS.intro, type: 'secondary' },
+          { text: '시스템 자세히 보기', href: PAGE_LINKS.first, type: 'primary' }
+        ],
+        help: '편하게 오시면 되고, 자세한 내용은 상담 때 설명드리겠습니다 :)'
+      }
+    };
+
     const TOTAL = 4;
-    function v(id) { return (document.getElementById(id)?.value || '').trim(); }
+
+    function v(id) {
+      return (document.getElementById(id)?.value || '').trim();
+    }
+
+    function renderSuccessBox(mode = SUCCESS_MODE) {
+      const content = SUCCESS_CONTENT[mode] || SUCCESS_CONTENT.light;
+
+      document.getElementById('success-icon').textContent = content.icon;
+      document.getElementById('success-tag').textContent = content.tag;
+      document.getElementById('success-title').innerHTML = content.title;
+      document.getElementById('success-desc').innerHTML = content.desc;
+      document.getElementById('success-actions').innerHTML = content.buttons.map(btn => {
+        return `<a href="${btn.href}" class="success-btn ${btn.type}" target="_blank" rel="noopener">${btn.text}</a>`;
+      }).join('');
+      document.getElementById('success-help').innerHTML = content.help;
+
+      const headerRight = document.getElementById('header-right-text');
+      if (headerRight) headerRight.textContent = content.tag;
+    }
 
     function goStep(n) {
       document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
       const el = document.getElementById('step-' + n);
       if (el) el.classList.add('active');
+
       for (let i = 1; i <= TOTAL; i++) {
         const ps = document.getElementById('ps-' + i);
         ps.classList.remove('active', 'done');
         if (i < n) ps.classList.add('done');
         else if (i === n) ps.classList.add('active');
-        if (i < TOTAL) document.getElementById('sep-' + i).classList.toggle('done', i < n);
+
+        if (i < TOTAL) {
+          document.getElementById('sep-' + i).classList.toggle('done', i < n);
+        }
       }
+
       document.getElementById('prog-label').textContent = 'Step ' + n + ' / ' + TOTAL;
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -1121,24 +1259,80 @@
     function nextStep(step) {
       const err = document.getElementById('err-' + step);
       err.style.display = 'none';
+
       if (step === 1) {
-        if (!v('s1-name') || !v('s1-birth') || !v('s1-contact') || !v('s1-region')) { err.style.display = 'block'; return; }
+        if (!v('s1-name') || !v('s1-birth') || !v('s1-contact') || !v('s1-region')) {
+          err.style.display = 'block';
+          return;
+        }
+
         const score = document.querySelector('input[name="score"]:checked');
-        if (!score) { err.style.display = 'block'; return; }
-        if (score.value === '예' && !v('s1-score-detail')) { err.style.display = 'block'; return; }
+        if (!score) {
+          err.style.display = 'block';
+          return;
+        }
+
+        if (score.value === '예' && !v('s1-score-detail')) {
+          err.style.display = 'block';
+          err.textContent = '⚠️ 어학 성적이 있다면 상세 내용을 입력해주세요.';
+          return;
+        }
+
+        err.textContent = '⚠️ 필수 항목을 모두 입력해주세요.';
       }
+
       if (step === 2) {
-        if (!document.querySelector('input[name="source"]:checked') ||
-          !document.querySelector('input[name="abroad"]:checked')) { err.style.display = 'block'; return; }
+        const source = document.querySelector('input[name="source"]:checked');
+        const abroad = document.querySelector('input[name="abroad"]:checked');
+
+        if (!source || !abroad) {
+          err.style.display = 'block';
+          err.textContent = '⚠️ 필수 항목을 모두 선택해주세요.';
+          return;
+        }
+
+        if (source.value === '기타' && !v('s2-source-other')) {
+          err.style.display = 'block';
+          err.textContent = '⚠️ 기타 경로를 선택하셨다면 내용을 입력해주세요.';
+          return;
+        }
+
+        if (abroad.value === '있다' && !v('s2-abroad-detail')) {
+          err.style.display = 'block';
+          err.textContent = '⚠️ 해외 거주 또는 영어 노출 경험 내용을 입력해주세요.';
+          return;
+        }
+
+        err.textContent = '⚠️ 필수 항목을 모두 선택해주세요.';
       }
+
       if (step === 3) {
-        if (!document.querySelector('input[name="exp"]:checked') ||
-          !document.querySelectorAll('input[name="purpose"]:checked').length ||
-          !document.querySelector('input[name="level"]:checked')) { err.style.display = 'block'; return; }
+        const exp = document.querySelector('input[name="exp"]:checked');
+        const purposes = document.querySelectorAll('input[name="purpose"]:checked');
+        const level = document.querySelector('input[name="level"]:checked');
+
+        if (!exp || !purposes.length || !level) {
+          err.style.display = 'block';
+          err.textContent = '⚠️ 필수 항목을 모두 선택해주세요.';
+          return;
+        }
+
+        const otherPurposeChecked = document.getElementById('pur-7').checked;
+        if (otherPurposeChecked && !v('s3-pur-other')) {
+          err.style.display = 'block';
+          err.textContent = '⚠️ 기타 목적을 선택하셨다면 내용을 입력해주세요.';
+          return;
+        }
+
+        err.textContent = '⚠️ 필수 항목을 모두 선택해주세요.';
       }
+
       goStep(step + 1);
     }
-    function prevStep(step) { goStep(step - 1); }
+
+    function prevStep(step) {
+      goStep(step - 1);
+    }
 
     // 조건부 필드
     document.querySelectorAll('input[name="score"]').forEach(r =>
@@ -1146,16 +1340,19 @@
         document.getElementById('score-detail-wrap').style.display = r.value === '예' ? 'block' : 'none';
       })
     );
+
     document.querySelectorAll('input[name="abroad"]').forEach(r =>
       r.addEventListener('change', () => {
         document.getElementById('abroad-detail-wrap').style.display = r.value === '있다' ? 'block' : 'none';
       })
     );
+
     document.querySelectorAll('input[name="source"]').forEach(r =>
       r.addEventListener('change', () => {
         document.getElementById('src-other-wrap').style.display = r.value === '기타' && r.checked ? 'block' : 'none';
       })
     );
+
     document.getElementById('pur-7').addEventListener('change', function () {
       document.getElementById('pur-other-wrap').style.display = this.checked ? 'block' : 'none';
     });
@@ -1164,24 +1361,27 @@
     async function submitForm() {
       const err = document.getElementById('err-4');
       err.style.display = 'none';
+
       const btn = document.getElementById('submit-btn');
 
       const srcEl = document.querySelector('input[name="source"]:checked');
-      const srcVal = srcEl?.value === '기타' ? '기타: ' + v('s2-source-other') : (srcEl?.value || '');
+      const srcVal = srcEl?.value === '기타'
+        ? '기타: ' + v('s2-source-other')
+        : (srcEl?.value || '');
+
       const purposes = [...document.querySelectorAll('input[name="purpose"]:checked')].map(i => i.value);
       const purFinal = purposes.includes('기타')
         ? [...purposes.filter(p => p !== '기타'), '기타: ' + v('s3-pur-other')]
         : purposes;
 
       const now = new Date();
-      const timestamp = now.getFullYear() + '-' + 
-                        String(now.getMonth() + 1).padStart(2, '0') + '-' + 
-                        String(now.getDate()).padStart(2, '0') + ' ' + 
-                        String(now.getHours()).padStart(2, '0') + ':' + 
-                        String(now.getMinutes()).padStart(2, '0') + ':' + 
-                        String(now.getSeconds()).padStart(2, '0');
+      const timestamp = now.getFullYear() + '-' +
+        String(now.getMonth() + 1).padStart(2, '0') + '-' +
+        String(now.getDate()).padStart(2, '0') + ' ' +
+        String(now.getHours()).padStart(2, '0') + ':' +
+        String(now.getMinutes()).padStart(2, '0') + ':' +
+        String(now.getSeconds()).padStart(2, '0');
 
-      // ★ 사용자가 요청한 17개 항목 순서 및 헤더 이름과 정확히 일치하도록 수정
       const data = {
         "타임스탬프": timestamp,
         "이름": v('s1-name'),
@@ -1204,6 +1404,7 @@
 
       btn.textContent = '전송 중...';
       btn.disabled = true;
+
       try {
         await fetch(SCRIPT_URL, {
           method: 'POST',
@@ -1211,10 +1412,17 @@
           headers: { 'Content-Type': 'text/plain' },
           body: JSON.stringify(data)
         });
-        // no-cors 모드에서는 응답을 읽을 수 없지만 요청 자체는 전달됨
+
+        renderSuccessBox(SUCCESS_MODE);
+
         document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
         document.getElementById('success-box').style.display = 'block';
+
+        const progressWrap = document.getElementById('progress-wrap');
+        if (progressWrap) progressWrap.style.display = 'none';
+
         window.scrollTo({ top: 0, behavior: 'smooth' });
+
       } catch (e) {
         err.textContent = '⚠️ 전송 중 오류가 발생했습니다: ' + e.message;
         err.style.display = 'block';
