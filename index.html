@@ -92,15 +92,27 @@
       z-index: 100;
     }
 
-    .logo {
+    .logo,
+    .logo:link,
+    .logo:visited,
+    .logo:hover,
+    .logo:active {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 30px;
       letter-spacing: 3px;
-      color: var(--dark);
+      color: var(--dark) !important;
       text-decoration: none;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 0;
+    }
+
+    .logo-the {
+      color: var(--dark) !important;
+    }
+
+    .logo-box {
+      color: var(--red) !important;
     }
 
     .logo-badge {
@@ -115,6 +127,7 @@
       color: #fff;
       transform: rotate(-4deg);
       box-shadow: 3px 3px 0 var(--dark);
+      margin-right: 10px;
     }
 
     .header-right {
@@ -863,7 +876,7 @@
   <header>
     <a href="https://busanthebox-coder.github.io/thebox/intro/" class="logo" target="_blank" rel="noopener">
       <div class="logo-badge">📦</div>
-      THE<span style="color:var(--red)">BOX</span>
+      <span class="logo-the">THE</span><span class="logo-box">BOX</span>
     </a>
     <div class="header-right" id="header-right-text">한국인 멤버 사전 상담지</div>
   </header>
@@ -925,12 +938,12 @@
           </div>
           <div>
             <label class="field-label" for="s1-birth">생년월일<span class="req">*</span></label>
-            <input class="field-input" id="s1-birth" type="text" placeholder="예시 : 2003.03.30">
+            <input class="field-input" id="s1-birth" type="text" inputmode="numeric" placeholder="예시 : 2003.03.30">
           </div>
         </div>
         <div class="field-group">
           <label class="field-label" for="s1-contact">연락처<span class="req">*</span></label>
-          <input class="field-input" id="s1-contact" type="tel" placeholder="예시 : 010-1234-1234">
+          <input class="field-input" id="s1-contact" type="tel" inputmode="numeric" placeholder="예시 : 010-1234-1234">
         </div>
         <div class="field-group">
           <label class="field-label" for="s1-region">거주지역<span class="req">*</span></label>
@@ -1089,6 +1102,9 @@
             <div class="pill-item"><input type="checkbox" id="diff-7" name="difficulty" value="기타"><label
                 for="diff-7"><span class="pill-emoji">➕</span> 기타</label></div>
           </div>
+          <div class="cond-field" id="diff-other-wrap" style="display:none">
+            <input class="field-input" id="s3-diff-other" type="text" placeholder="기타 어려운 점을 입력해주세요">
+          </div>
         </div>
       </div>
       <div id="err-3" class="field-error">⚠️ 필수 항목을 모두 선택해주세요.</div>
@@ -1220,6 +1236,30 @@
       return (document.getElementById(id)?.value || '').trim();
     }
 
+    function formatBirthDate(value) {
+      const digits = value.replace(/\D/g, '').slice(0, 8);
+
+      if (digits.length <= 4) return digits;
+      if (digits.length <= 6) return digits.slice(0, 4) + '.' + digits.slice(4);
+      return digits.slice(0, 4) + '.' + digits.slice(4, 6) + '.' + digits.slice(6);
+    }
+
+    function formatPhoneNumber(value) {
+      const digits = value.replace(/\D/g, '').slice(0, 11);
+
+      if (digits.startsWith('02')) {
+        if (digits.length <= 2) return digits;
+        if (digits.length <= 5) return digits.slice(0, 2) + '-' + digits.slice(2);
+        if (digits.length <= 9) return digits.slice(0, 2) + '-' + digits.slice(2, digits.length - 4) + '-' + digits.slice(-4);
+        return digits.slice(0, 2) + '-' + digits.slice(2, 6) + '-' + digits.slice(6);
+      }
+
+      if (digits.length <= 3) return digits;
+      if (digits.length <= 7) return digits.slice(0, 3) + '-' + digits.slice(3);
+      if (digits.length <= 10) return digits.slice(0, 3) + '-' + digits.slice(3, 6) + '-' + digits.slice(6);
+      return digits.slice(0, 3) + '-' + digits.slice(3, 7) + '-' + digits.slice(7);
+    }
+
     function renderSuccessBox(mode = SUCCESS_MODE) {
       const content = SUCCESS_CONTENT[mode] || SUCCESS_CONTENT.light;
 
@@ -1324,6 +1364,13 @@
           return;
         }
 
+        const otherDifficultyChecked = document.getElementById('diff-7').checked;
+        if (otherDifficultyChecked && !v('s3-diff-other')) {
+          err.style.display = 'block';
+          err.textContent = '⚠️ 기타 어려운 점을 선택하셨다면 내용을 입력해주세요.';
+          return;
+        }
+
         err.textContent = '⚠️ 필수 항목을 모두 선택해주세요.';
       }
 
@@ -1332,6 +1379,22 @@
 
     function prevStep(step) {
       goStep(step - 1);
+    }
+
+    // 자동 포맷
+    const birthInput = document.getElementById('s1-birth');
+    const contactInput = document.getElementById('s1-contact');
+
+    if (birthInput) {
+      birthInput.addEventListener('input', function () {
+        this.value = formatBirthDate(this.value);
+      });
+    }
+
+    if (contactInput) {
+      contactInput.addEventListener('input', function () {
+        this.value = formatPhoneNumber(this.value);
+      });
     }
 
     // 조건부 필드
@@ -1357,6 +1420,10 @@
       document.getElementById('pur-other-wrap').style.display = this.checked ? 'block' : 'none';
     });
 
+    document.getElementById('diff-7').addEventListener('change', function () {
+      document.getElementById('diff-other-wrap').style.display = this.checked ? 'block' : 'none';
+    });
+
     // 제출
     async function submitForm() {
       const err = document.getElementById('err-4');
@@ -1373,6 +1440,11 @@
       const purFinal = purposes.includes('기타')
         ? [...purposes.filter(p => p !== '기타'), '기타: ' + v('s3-pur-other')]
         : purposes;
+
+      const difficulties = [...document.querySelectorAll('input[name="difficulty"]:checked')].map(i => i.value);
+      const diffFinal = difficulties.includes('기타')
+        ? [...difficulties.filter(d => d !== '기타'), '기타: ' + v('s3-diff-other')]
+        : difficulties;
 
       const now = new Date();
       const timestamp = now.getFullYear() + '-' +
@@ -1396,7 +1468,7 @@
         "영어회화 수업을 들어본 적이 있나요?": document.querySelector('input[name="exp"]:checked')?.value || '',
         "영어 공부하는 이유를 모두 선택해주세요. (복수가능)": purFinal.join(', '),
         "본인이 생각하는 현재 영어 수준은 어느 정도인가요?": document.querySelector('input[name="level"]:checked')?.value || '',
-        "영어로 말할 때 가장 어려운 점은 무엇인가요? (복수 가능)": [...document.querySelectorAll('input[name="difficulty"]:checked')].map(i => i.value).join(', '),
+        "영어로 말할 때 가장 어려운 점은 무엇인가요? (복수 가능)": diffFinal.join(', '),
         "가능한 시간을 모두 선택해주세요. (복수 가능)": [...document.querySelectorAll('input[name="schedule"]:checked')].map(i => i.value).join(', '),
         "현재 더 관심 있는 과정은 무엇인가요?": document.querySelector('input[name="program"]:checked')?.value || '',
         "이외에 궁금하신 점이나, 상담시 참고할 내용 있으면 자유롭게 적어주시면 감사하겠습니다.": v('s4-notes')
@@ -1416,12 +1488,20 @@
         renderSuccessBox(SUCCESS_MODE);
 
         document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
-        document.getElementById('success-box').style.display = 'block';
+
+        const successBox = document.getElementById('success-box');
+        successBox.style.display = 'block';
 
         const progressWrap = document.getElementById('progress-wrap');
         if (progressWrap) progressWrap.style.display = 'none';
 
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => {
+          const targetY = successBox.getBoundingClientRect().top + window.pageYOffset - 80;
+          window.scrollTo({
+            top: targetY,
+            behavior: 'smooth'
+          });
+        }, 60);
 
       } catch (e) {
         err.textContent = '⚠️ 전송 중 오류가 발생했습니다: ' + e.message;
