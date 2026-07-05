@@ -4,9 +4,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>더박스 상담 신청 | TheBox Busan</title>
+  <title>더박스 상담 신청 | THE BOX 부산 영어회화</title>
+  <meta name="description" content="부산 서면 영어회화 커뮤니티 더박스 사전 상담 신청. 원어민 스터디·아카데미 상담을 위한 간단한 신청서를 작성해주세요.">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://busanthebox-coder.github.io/consultation/">
+  <link rel="icon" href="/consultation/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="더박스 상담 신청 | THE BOX 부산 영어회화">
+  <meta property="og:description" content="부산 서면 영어회화 커뮤니티 더박스 사전 상담 신청 페이지입니다.">
+  <meta property="og:image" content="https://busanthebox-coder.github.io/thebox/intro/og-image.jpg">
+  <meta property="og:url" content="https://busanthebox-coder.github.io/consultation/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+KR:wght@400;700&display=swap"
     rel="stylesheet">
   <style>
     :root {
@@ -797,9 +808,12 @@
 
     @media (prefers-reduced-motion: reduce) {
       .success-btn.sparkle::before,
-      .success-btn.sparkle::after {
+      .success-btn.sparkle::after,
+      .topbar-track {
         animation: none;
       }
+      html { scroll-behavior: auto; }
+      * { transition: none !important; }
     }
 
     .success-help {
@@ -877,9 +891,64 @@
 
     .footer-info {
       font-size: 12px;
-      color: rgba(255, 255, 255, .25);
+      color: rgba(255, 255, 255, .62);
       line-height: 1.6;
       text-align: right;
+    }
+
+    .footer-info a {
+      color: rgba(255, 255, 255, .62);
+      text-decoration: none;
+    }
+
+    .consent-box {
+      background: var(--warm);
+      border: 1px solid var(--tan);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-top: 8px;
+    }
+
+    .consent-box summary {
+      font-size: 12.5px;
+      font-weight: 800;
+      letter-spacing: .3px;
+      color: var(--dark);
+      cursor: pointer;
+    }
+
+    .consent-box .consent-body {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-top: 10px;
+    }
+
+    .consent-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--dark);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .consent-check input {
+      width: 17px;
+      height: 17px;
+      margin-top: 1px;
+      accent-color: var(--red);
+      flex-shrink: 0;
+    }
+
+    .hp-field {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
     }
 
     @media(max-width:768px) {
@@ -1021,20 +1090,20 @@
         <div class="field-group half-row">
           <div>
             <label class="field-label" for="s1-name">이름<span class="req">*</span></label>
-            <input class="field-input" id="s1-name" type="text" placeholder="예시 : 김하나">
+            <input class="field-input" id="s1-name" type="text" autocomplete="name" placeholder="예시: 김하나">
           </div>
           <div>
             <label class="field-label" for="s1-birth">생년월일<span class="req">*</span></label>
-            <input class="field-input" id="s1-birth" type="text" inputmode="numeric" placeholder="예시 : 2003.03.30">
+            <input class="field-input" id="s1-birth" type="text" inputmode="numeric" autocomplete="bday" placeholder="예시: 2003.03.30">
           </div>
         </div>
         <div class="field-group">
           <label class="field-label" for="s1-contact">연락처<span class="req">*</span></label>
-          <input class="field-input" id="s1-contact" type="tel" inputmode="numeric" placeholder="예시 : 010-1234-1234">
+          <input class="field-input" id="s1-contact" type="tel" inputmode="numeric" autocomplete="tel" placeholder="예시: 010-1234-1234">
         </div>
         <div class="field-group">
           <label class="field-label" for="s1-region">거주지역<span class="req">*</span></label>
-          <input class="field-input" id="s1-region" type="text" placeholder="예시: 전포동 / 연산동 / 우동">
+          <input class="field-input" id="s1-region" type="text" autocomplete="address-level2" placeholder="예시: 전포동 / 연산동 / 우동">
           <p class="field-hint">동까지만 작성 부탁드립니다.</p>
         </div>
         <hr class="form-divider">
@@ -1242,7 +1311,29 @@
           <textarea class="field-textarea" id="s4-notes" placeholder="있으면 자유롭게 적어주시면 감사하겠습니다 😊"></textarea>
         </div>
       </div>
-      <div id="err-4" class="field-error">⚠️ 오류가 발생했습니다. 다시 시도해주세요.</div>
+      <!-- 스팸 방지용 숨김 필드 (사람은 비워둠) -->
+      <div class="hp-field" aria-hidden="true">
+        <label for="hp-website">이 칸은 비워두세요</label>
+        <input type="text" id="hp-website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <!-- 개인정보 수집·이용 동의 -->
+      <details class="consent-box">
+        <summary>[필수] 개인정보 수집·이용 동의 &nbsp;(자세히 보기)</summary>
+        <div class="consent-body">
+          · 수집 항목: 이름, 생년월일, 연락처, 거주지역, 상담 설문 응답<br>
+          · 이용 목적: 영어회화 상담 진행 및 반 배정 안내<br>
+          · 보유 기간: 상담 완료 후 6개월 이내 파기<br>
+          · 사진 안내: 상담 후 멤버가 되실 경우 수업·행사 중 촬영된 사진이 SNS·홍보에 활용될 수 있습니다.<br>
+          · 동의를 거부할 수 있으며, 거부 시 상담 신청이 제한됩니다.
+        </div>
+      </details>
+      <label class="consent-check">
+        <input type="checkbox" id="consent-agree">
+        <span>개인정보 수집·이용에 동의합니다. (필수)</span>
+      </label>
+
+      <div id="err-4" class="field-error" role="alert" aria-live="assertive">⚠️ 오류가 발생했습니다. 다시 시도해주세요.</div>
       <div class="btn-row">
         <button class="btn-back" onclick="prevStep(4)">← 이전</button>
         <button class="btn-next" id="submit-btn" onclick="submitForm()">상담 신청 완료 ✓</button>
@@ -1266,7 +1357,7 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-logo">THE<span>BOX</span> 📦</div>
-    <div class="footer-info">busanthebox@gmail.com<br>© 2026 TheBox Korean Community Busan</div>
+    <div class="footer-info"><a href="mailto:busanthebox@gmail.com">busanthebox@gmail.com</a><br>© 2026 THE BOX 부산 영어회화</div>
   </footer>
 
   <script>
@@ -1391,6 +1482,21 @@
       if (step === 1) {
         if (!v('s1-name') || !v('s1-birth') || !v('s1-contact') || !v('s1-region')) {
           err.style.display = 'block';
+          err.textContent = '⚠️ 필수 항목을 모두 입력해주세요.';
+          return;
+        }
+
+        const contactDigits = v('s1-contact').replace(/\D/g, '');
+        if (contactDigits.length < 10 || contactDigits.length > 11) {
+          err.style.display = 'block';
+          err.textContent = '⚠️ 연락처를 정확히 입력해주세요. (숫자 10~11자리)';
+          return;
+        }
+
+        const birthDigits = v('s1-birth').replace(/\D/g, '');
+        if (birthDigits.length !== 8) {
+          err.style.display = 'block';
+          err.textContent = '⚠️ 생년월일 8자리를 정확히 입력해주세요. (예: 2003.03.30)';
           return;
         }
 
@@ -1519,6 +1625,20 @@
 
       const btn = document.getElementById('submit-btn');
 
+      if (!document.getElementById('consent-agree').checked) {
+        err.style.display = 'block';
+        err.textContent = '⚠️ 개인정보 수집·이용에 동의해주세요.';
+        return;
+      }
+
+      // 허니팟: 봇이 채우면 조용히 완료 화면만 표시하고 전송하지 않음
+      if (v('hp-website')) {
+        renderSuccessBox(SUCCESS_MODE);
+        document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+        document.getElementById('success-box').style.display = 'block';
+        return;
+      }
+
       const srcEl = document.querySelector('input[name="source"]:checked');
       const srcVal = srcEl?.value === '기타'
         ? '기타: ' + v('s2-source-other')
@@ -1566,12 +1686,13 @@
       btn.disabled = true;
 
       try {
-        await fetch(SCRIPT_URL, {
+        const res = await fetch(SCRIPT_URL, {
           method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain' },
+          redirect: 'follow',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(data)
         });
+        if (!res.ok) throw new Error('server ' + res.status);
 
         renderSuccessBox(SUCCESS_MODE);
 
@@ -1592,7 +1713,7 @@
         }, 60);
 
       } catch (e) {
-        err.textContent = '⚠️ 전송 중 오류가 발생했습니다: ' + e.message;
+        err.textContent = '⚠️ 전송에 실패했습니다. 잠시 후 다시 시도하시거나 busanthebox@gmail.com 으로 문의해주세요.';
         err.style.display = 'block';
         btn.textContent = '상담 신청 완료 ✓';
         btn.disabled = false;
