@@ -7,6 +7,8 @@
   <title>더박스 상담 신청 | THE BOX 부산 영어회화</title>
   <meta name="description" content="부산 서면 영어회화 커뮤니티 더박스 사전 상담 신청. 원어민 스터디·아카데미 상담을 위한 간단한 신청서를 작성해주세요.">
   <meta name="robots" content="noindex">
+  <script defer src="/thebox/assets/measurement-config.js"></script>
+  <script defer src="/thebox/assets/measurement.js"></script>
   <link rel="canonical" href="https://busanthebox-coder.github.io/consultation/">
   <link rel="icon" href="/consultation/favicon.svg" type="image/svg+xml">
   <meta property="og:type" content="website">
@@ -1628,6 +1630,7 @@
       err.style.display = 'none';
 
       const btn = document.getElementById('submit-btn');
+      if (btn.disabled) return;
 
       if (!document.getElementById('consent-agree').checked) {
         err.style.display = 'block';
@@ -1688,6 +1691,7 @@
 
       btn.textContent = '전송 중...';
       btn.disabled = true;
+      window.THEBOXMeasurement?.track('consultation_submit');
 
       try {
         const res = await fetch(SCRIPT_URL, {
@@ -1697,6 +1701,12 @@
           body: JSON.stringify(data)
         });
         if (!res.ok) throw new Error('server ' + res.status);
+        const responseBody = await res.text();
+        const responseStatus = window.THEBOXMeasurement?.responseStatus(responseBody) || 'unverified';
+        if (responseStatus === 'error') throw new Error('application error');
+        // HTTP 200 alone does not confirm storage. Count success only after an explicit server acknowledgement.
+        window.THEBOXMeasurement?.track(responseStatus === 'success'
+          ? 'consultation_success' : 'consultation_response_unverified');
 
         renderSuccessBox(SUCCESS_MODE);
 
@@ -1717,6 +1727,7 @@
         }, 60);
 
       } catch (e) {
+        window.THEBOXMeasurement?.track('consultation_error');
         err.textContent = '⚠️ 전송에 실패했습니다. 잠시 후 다시 시도하시거나 busanthebox@gmail.com 으로 문의해주세요.';
         err.style.display = 'block';
         btn.textContent = '상담 신청 완료 ✓';
