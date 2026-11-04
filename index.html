@@ -19,6 +19,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+KR:wght@400;700&display=swap"
     rel="stylesheet">
+  <script src="./assets/video-guide.js" defer></script>
   <style>
     :root {
       --red: #C13030;
@@ -150,7 +151,7 @@
     /* HERO */
     .form-hero {
       background: var(--dark);
-      padding: 64px 48px 56px;
+      padding: 28px 48px;
       position: relative;
       overflow: hidden;
     }
@@ -200,7 +201,7 @@
       font-weight: 800;
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin-bottom: 24px;
+      margin-bottom: 14px;
     }
 
     .hero-dot {
@@ -225,9 +226,9 @@
 
     .hero-h1 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(56px, 8vw, 100px);
-      line-height: .88;
-      letter-spacing: 3px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.1;
+      letter-spacing: 1px;
       color: #fff;
       margin-bottom: 16px;
     }
@@ -254,6 +255,201 @@
 
     .hero-desc strong {
       color: rgba(255, 255, 255, .9);
+    }
+
+    .booking-note {
+      margin-top: 16px;
+      padding-left: 12px;
+      border-left: 3px solid var(--yellow);
+      color: rgba(255, 255, 255, .8);
+      font-size: 13px;
+      line-height: 1.7;
+      max-width: 580px;
+    }
+
+    .booking-note strong {
+      color: #fff;
+    }
+
+    #step-1 .step-head {
+      margin-bottom: 24px;
+    }
+
+    #step-1 .step-h2 {
+      font-size: 32px;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+
+    .program-guide {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 0 0 16px;
+    }
+
+    .program-guide > div {
+      padding: 14px;
+      border: 1px solid var(--tan);
+      border-radius: 10px;
+      background: var(--cream);
+    }
+
+    .program-guide dt {
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .program-guide dd,
+    .choice-hint {
+      font-size: 13px;
+      line-height: 1.7;
+      color: #685347;
+    }
+
+    .choice-hint {
+      margin-top: 10px;
+    }
+
+    .program-videos {
+      margin: 0 0 20px;
+      scroll-margin-top: 150px;
+      border: 1px solid var(--tan);
+      border-radius: 10px;
+      background: var(--cream);
+      overflow: hidden;
+    }
+
+    .program-videos > summary {
+      padding: 15px 14px;
+      color: var(--dark);
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.6;
+      cursor: pointer;
+    }
+
+    .video-guide-body {
+      padding: 0 14px 16px;
+    }
+
+    .video-guide-intro,
+    .video-status,
+    .video-review-note,
+    .video-direct-link {
+      color: #685347;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .video-length-options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .video-length-button {
+      padding: 11px 8px;
+      border: 1px solid var(--tan);
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--dark);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.5;
+      cursor: pointer;
+    }
+
+    .video-length-button[aria-pressed="true"] {
+      background: var(--red);
+      color: var(--white);
+      border-color: var(--red);
+    }
+
+    .video-length-button:focus-visible,
+    .program-videos > summary:focus-visible,
+    .video-version-select:focus-visible {
+      outline: 3px solid var(--dark);
+      outline-offset: 3px;
+    }
+
+    .video-version-choice {
+      margin: 12px 0;
+    }
+
+    .video-version-choice label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--dark);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .video-version-select {
+      width: 100%;
+      min-width: 0;
+      padding: 11px 8px;
+      border: 1px solid var(--tan);
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--dark);
+      font: inherit;
+      font-size: 13px;
+    }
+
+    .video-review-note,
+    .video-direct-link {
+      margin-top: 8px;
+    }
+
+    .video-status {
+      margin: 10px 0;
+    }
+
+    .program-video {
+      display: block;
+      width: 100%;
+      max-width: 360px;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 8px;
+      background: #141010;
+    }
+
+    .video-direct-link a {
+      color: var(--red);
+      font-weight: 700;
+      text-underline-offset: 3px;
+    }
+
+    .video-error {
+      margin-top: 10px;
+      color: var(--red);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .program-videos [hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 480px) {
+      .program-guide {
+        grid-template-columns: 1fr;
+      }
+
+      .prog-steps {
+        min-width: 0;
+        gap: 6px;
+      }
+
+      .prog-sep {
+        width: 16px;
+        flex-shrink: 1;
+      }
     }
 
     /* PROGRESS */
@@ -962,7 +1158,7 @@
       }
 
       .form-hero {
-        padding: 44px 24px 40px;
+        padding: 24px;
       }
 
       .progress-wrap {
@@ -1045,13 +1241,14 @@
   <section class="form-hero">
     <div class="hero-inner">
       <div class="hero-tag"><span class="hero-dot"></span> 사전 상담 설문</div>
-      <h1 class="hero-h1">CONSULTATION<br><span class="red">FORM</span></h1>
-      <p class="hero-ko">더박스 한국인 멤버 상담지</p>
+      <h1 class="hero-h1">더박스 사전 <span class="red">상담지</span></h1>
       <p class="hero-desc">
-        안녕하세요! <strong>더박스</strong>에 관심 가져주셔서 감사합니다.<br>
         원활한 상담과 <strong>반 배정</strong>을 위해 기본 정보, 영어 학습 배경,
-        가능한 시간대를 간단히 체크해주세요.<br>
-        거주지역은 <strong>동까지만</strong> 작성 부탁드립니다. 예: 서면 / 전포동 / 연산동
+        가능한 시간대를 알려주세요.
+      </p>
+      <p class="booking-note">
+        <strong>상담지 작성만으로 예약이 완료되지는 않아요.</strong><br>
+        아직 예약 전이라면 작성 후 네이버에서 상담을 예약해 주세요.
       </p>
     </div>
   </section>
@@ -1087,7 +1284,7 @@
     <div class="form-step active" id="step-1">
       <div class="step-head">
         <div class="step-tag">Step 1 — 기본 정보</div>
-        <h2 class="step-h2">누구세요,<br><span class="red">반가워요!</span></h2>
+        <h2 class="step-h2"><span class="red">반가워요!</span></h2>
         <p class="step-sub"><span style="color:var(--red)">*</span> 표시는 필수 항목입니다.</p>
       </div>
       <div class="form-card">
@@ -1285,6 +1482,10 @@
         <div class="field-group">
           <label class="field-label">가능한 시간을 모두 선택해주세요. <span class="opt">(복수 가능)</span></label>
           <div class="pill-group col2">
+            <div class="pill-item"><input type="checkbox" id="sch-6" name="schedule" value="오전 10:00~11:30"><label
+                for="sch-6"><span class="pill-emoji">🌅</span> 오전 10:00~11:30</label></div>
+            <div class="pill-item"><input type="checkbox" id="sch-7" name="schedule" value="오전 11:00~12:30"><label
+                for="sch-7"><span class="pill-emoji">🌅</span> 오전 11:00~12:30</label></div>
             <div class="pill-item"><input type="checkbox" id="sch-1" name="schedule" value="오전 가능"><label
                 for="sch-1"><span class="pill-emoji">🌅</span> 오전 가능</label></div>
             <div class="pill-item"><input type="checkbox" id="sch-2" name="schedule" value="월수 저녁 가능"><label
@@ -1300,14 +1501,52 @@
         <hr class="form-divider">
         <div class="field-group">
           <label class="field-label">현재 더 관심 있는 과정은 무엇인가요?</label>
+          <dl class="program-guide">
+            <div id="academy-guide">
+              <dt>아카데미 · 배우고 다듬기</dt>
+              <dd>한국인 전문 선생님과 문장·표현을 배우고, 틀린 이유를 짚으며 말하기를 연습해요.</dd>
+            </div>
+            <div id="study-guide">
+              <dt>스터디 · 대화로 써보기</dt>
+              <dd>미리 받은 주제지로 준비하고, 영어권 원어민·멤버들과 대화해요. 리더가 진행을 도와요.</dd>
+            </div>
+          </dl>
+          <details class="program-videos" id="program-videos">
+            <summary>영상으로 차이 알아보기 <span class="opt">(선택)</span></summary>
+            <div class="video-guide-body">
+              <p class="video-guide-intro" id="video-guide-intro">31초 요약을 먼저 보고, 궁금하면 전체 설명도 볼 수 있어요.</p>
+              <div class="video-length-options" role="group" aria-label="영상 길이 선택">
+                <button type="button" class="video-length-button" id="video-summary-button" aria-pressed="true" aria-controls="program-video">31초 요약 보기</button>
+                <button type="button" class="video-length-button" id="video-full-button" aria-pressed="false" aria-controls="program-video">전체 설명 보기<br>2분 4초</button>
+              </div>
+              <div class="video-version-choice" id="video-version-choice" hidden>
+                <label for="full-video-version">전체 영상 버전 선택</label>
+                <select class="video-version-select" id="full-video-version" aria-describedby="video-review-note">
+                  <option value="">재생할 버전을 선택해 주세요</option>
+                  <option value="consultation">배경음악 포함</option>
+                  <option value="final">음악 없이 · 효과음만</option>
+                </select>
+                <p class="video-review-note" id="video-review-note">두 영상의 설명 내용은 같아요. 배경음악이 있는 버전과 효과음만 있는 버전 중 골라보세요.</p>
+              </div>
+              <p class="video-status" id="video-status" role="status" aria-live="polite">31초 요약 · 재생 버튼을 눌러주세요.</p>
+              <div id="program-video-stage">
+                <video class="program-video" id="program-video" controls playsinline preload="none" width="1080" height="1920" aria-label="아카데미와 스터디 차이 안내 영상" aria-describedby="video-guide-intro video-status">
+                  브라우저가 영상 재생을 지원하지 않습니다.
+                </video>
+                <p class="video-direct-link">재생이 안 되면 <a id="video-direct-link" href="./assets/films/academy-study-summary.mp4" target="_blank" rel="noopener">영상을 직접 열어보세요</a>.</p>
+              </div>
+              <p class="video-error" id="video-error" role="alert" hidden>영상을 불러오지 못했어요. 영상 선택을 다시 확인하거나 직접 열어보세요.</p>
+            </div>
+          </details>
           <div class="pill-group">
-            <div class="pill-item"><input type="radio" id="prog-1" name="program" value="아카데미"><label for="prog-1"><span
+            <div class="pill-item"><input type="radio" id="prog-1" name="program" value="아카데미" aria-describedby="academy-guide"><label for="prog-1"><span
                   class="pill-emoji">🏫</span> 아카데미</label></div>
-            <div class="pill-item"><input type="radio" id="prog-2" name="program" value="스터디"><label for="prog-2"><span
+            <div class="pill-item"><input type="radio" id="prog-2" name="program" value="스터디" aria-describedby="study-guide"><label for="prog-2"><span
                   class="pill-emoji">📚</span> 스터디</label></div>
             <div class="pill-item"><input type="radio" id="prog-3" name="program" value="상담 후 결정"><label
                 for="prog-3"><span class="pill-emoji">💭</span> 상담 후 결정</label></div>
           </div>
+          <p class="choice-hint">아직 잘 모르겠다면 ‘상담 후 결정’을 선택해주세요. 두 과정을 함께 할 수도 있어요.</p>
         </div>
         <hr class="form-divider">
         <div class="field-group">
