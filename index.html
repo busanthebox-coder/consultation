@@ -331,7 +331,7 @@
     }
 
     .video-guide-body {
-      padding: 0 14px 16px;
+      padding: 16px 14px;
     }
 
     .video-guide-intro,
@@ -1388,15 +1388,15 @@
       </div>
       <div class="form-card">
         <div class="field-group">
-          <label class="field-label">영어회화 수업을 들어본 적이 있나요?<span class="req">*</span></label>
+          <label class="field-label">영어 학습 경험을 모두 선택해주세요.<span class="req">*</span> <span class="opt">(복수 가능)</span></label>
           <div class="pill-group col2">
-            <div class="pill-item"><input type="radio" id="exp-1" name="exp" value="스터디 경험이 있다"><label for="exp-1"><span
+            <div class="pill-item"><input type="checkbox" id="exp-1" name="exp" value="스터디 경험이 있다"><label for="exp-1"><span
                   class="pill-emoji">📚</span> 스터디 경험이 있다</label></div>
-            <div class="pill-item"><input type="radio" id="exp-2" name="exp" value="영어학원/회화수업 경험이 있다"><label
+            <div class="pill-item"><input type="checkbox" id="exp-2" name="exp" value="영어학원/회화수업 경험이 있다"><label
                 for="exp-2"><span class="pill-emoji">🏫</span> 영어학원/회화수업 경험이 있다</label></div>
-            <div class="pill-item"><input type="radio" id="exp-3" name="exp" value="혼자 공부해봤다"><label for="exp-3"><span
+            <div class="pill-item"><input type="checkbox" id="exp-3" name="exp" value="혼자 공부해봤다"><label for="exp-3"><span
                   class="pill-emoji">💻</span> 혼자 공부해봤다</label></div>
-            <div class="pill-item"><input type="radio" id="exp-4" name="exp" value="없다"><label for="exp-4"><span
+            <div class="pill-item"><input type="checkbox" id="exp-4" name="exp" value="없다"><label for="exp-4"><span
                   class="pill-emoji">🙈</span> 없다</label></div>
           </div>
         </div>
@@ -1500,7 +1500,7 @@
         </div>
         <hr class="form-divider">
         <div class="field-group">
-          <label class="field-label">현재 더 관심 있는 과정은 무엇인가요?</label>
+          <label class="field-label">현재 더 관심 있는 과정은 무엇인가요? <span class="opt">(복수 가능)</span></label>
           <dl class="program-guide">
             <div id="academy-guide">
               <dt>아카데미 · 배우고 다듬기</dt>
@@ -1511,39 +1511,26 @@
               <dd>미리 받은 주제지로 준비하고, 영어권 원어민·멤버들과 대화해요. 리더가 진행을 도와요.</dd>
             </div>
           </dl>
-          <details class="program-videos" id="program-videos">
-            <summary>영상으로 차이 알아보기 <span class="opt">(선택)</span></summary>
+          <section class="program-videos" id="program-videos" aria-label="과정 안내 영상">
             <div class="video-guide-body">
-              <p class="video-guide-intro" id="video-guide-intro">31초 요약을 먼저 보고, 궁금하면 전체 설명도 볼 수 있어요.</p>
-              <div class="video-length-options" role="group" aria-label="영상 길이 선택">
-                <button type="button" class="video-length-button" id="video-summary-button" aria-pressed="true" aria-controls="program-video">31초 요약 보기</button>
-                <button type="button" class="video-length-button" id="video-full-button" aria-pressed="false" aria-controls="program-video">전체 설명 보기<br>2분 4초</button>
+              <p class="video-guide-intro" id="video-guide-intro">두 과정의 차이를 영상으로 확인해주세요. 원하는 영상 하나를 끝까지 시청하면 신청할 수 있어요. 영상은 소리 없이 재생됩니다.</p>
+              <div class="video-length-options" role="group" aria-label="영상 선택">
+                <button type="button" class="video-length-button" id="video-summary-button" aria-pressed="true" aria-controls="program-video">요약본 보기 · 31초</button>
+                <button type="button" class="video-length-button" id="video-full-button" aria-pressed="false" aria-controls="program-video">자세히 보기 · 2분 4초</button>
               </div>
-              <div class="video-version-choice" id="video-version-choice" hidden>
-                <label for="full-video-version">전체 영상 버전 선택</label>
-                <select class="video-version-select" id="full-video-version" aria-describedby="video-review-note">
-                  <option value="">재생할 버전을 선택해 주세요</option>
-                  <option value="consultation">배경음악 포함</option>
-                  <option value="final">음악 없이 · 효과음만</option>
-                </select>
-                <p class="video-review-note" id="video-review-note">두 영상의 설명 내용은 같아요. 배경음악이 있는 버전과 효과음만 있는 버전 중 골라보세요.</p>
-              </div>
-              <p class="video-status" id="video-status" role="status" aria-live="polite">31초 요약 · 재생 버튼을 눌러주세요.</p>
-              <div id="program-video-stage">
-                <video class="program-video" id="program-video" controls playsinline preload="none" width="1080" height="1920" aria-label="아카데미와 스터디 차이 안내 영상" aria-describedby="video-guide-intro video-status">
-                  브라우저가 영상 재생을 지원하지 않습니다.
-                </video>
-                <p class="video-direct-link">재생이 안 되면 <a id="video-direct-link" href="./assets/films/academy-study-summary.mp4" target="_blank" rel="noopener">영상을 직접 열어보세요</a>.</p>
-              </div>
-              <p class="video-error" id="video-error" role="alert" hidden>영상을 불러오지 못했어요. 영상 선택을 다시 확인하거나 직접 열어보세요.</p>
+              <p class="video-status" id="video-status" role="status" aria-live="polite">요약본을 끝까지 시청해주세요.</p>
+              <video class="program-video" id="program-video" controls muted playsinline preload="metadata" width="1080" height="1920" aria-label="아카데미와 스터디 차이 안내 영상" aria-describedby="video-guide-intro video-status">
+                브라우저가 영상 재생을 지원하지 않습니다.
+              </video>
+              <p class="video-error" id="video-error" role="alert" hidden>영상을 재생할 수 없어요. 다른 브라우저에서 다시 시도하시거나 더박스에 문의해주세요.</p>
             </div>
-          </details>
+          </section>
           <div class="pill-group">
-            <div class="pill-item"><input type="radio" id="prog-1" name="program" value="아카데미" aria-describedby="academy-guide"><label for="prog-1"><span
+            <div class="pill-item"><input type="checkbox" id="prog-1" name="program" value="아카데미" aria-describedby="academy-guide"><label for="prog-1"><span
                   class="pill-emoji">🏫</span> 아카데미</label></div>
-            <div class="pill-item"><input type="radio" id="prog-2" name="program" value="스터디" aria-describedby="study-guide"><label for="prog-2"><span
+            <div class="pill-item"><input type="checkbox" id="prog-2" name="program" value="스터디" aria-describedby="study-guide"><label for="prog-2"><span
                   class="pill-emoji">📚</span> 스터디</label></div>
-            <div class="pill-item"><input type="radio" id="prog-3" name="program" value="상담 후 결정"><label
+            <div class="pill-item"><input type="checkbox" id="prog-3" name="program" value="상담 후 결정"><label
                 for="prog-3"><span class="pill-emoji">💭</span> 상담 후 결정</label></div>
           </div>
           <p class="choice-hint">아직 잘 모르겠다면 ‘상담 후 결정’을 선택해주세요. 두 과정을 함께 할 수도 있어요.</p>
@@ -1861,12 +1848,38 @@
       document.getElementById('diff-other-wrap').style.display = this.checked ? 'block' : 'none';
     });
 
+    // 서로 양립할 수 없는 선택지는 함께 선택하지 않습니다.
+    function exclusiveChoice(name, exclusiveId) {
+      const exclusive = document.getElementById(exclusiveId);
+      document.querySelectorAll('input[name="' + name + '"]').forEach(input => {
+        input.addEventListener('change', () => {
+          if (!input.checked) return;
+          if (input === exclusive) {
+            document.querySelectorAll('input[name="' + name + '"]').forEach(other => {
+              if (other !== exclusive) other.checked = false;
+            });
+          } else {
+            exclusive.checked = false;
+          }
+        });
+      });
+    }
+    exclusiveChoice('exp', 'exp-4');
+    exclusiveChoice('program', 'prog-3');
+
     // 제출
     async function submitForm() {
       const err = document.getElementById('err-4');
       err.style.display = 'none';
 
       const btn = document.getElementById('submit-btn');
+
+      if (typeof window.programVideoComplete !== 'function' || !window.programVideoComplete()) {
+        err.style.display = 'block';
+        err.textContent = '⚠️ 안내 영상 하나를 끝까지 시청해주세요.';
+        document.getElementById('program-videos').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
 
       if (!document.getElementById('consent-agree').checked) {
         err.style.display = 'block';
@@ -1916,12 +1929,12 @@
         "더박스를 처음 알게 된 경로는 무엇인가요?": srcVal,
         "해외 거주 또는 영어 노출 경험이 있나요?": document.querySelector('input[name="abroad"]:checked')?.value || '',
         "해외 거주 또는 영어 노출 경험이 있다면 어디서 얼마나 어떤 목적으로 있으셨나요?": v('s2-abroad-detail'),
-        "영어회화 수업을 들어본 적이 있나요?": document.querySelector('input[name="exp"]:checked')?.value || '',
+        "영어회화 수업을 들어본 적이 있나요?": [...document.querySelectorAll('input[name="exp"]:checked')].map(i => i.value).join(', '),
         "영어 공부하는 이유를 모두 선택해주세요. (복수가능)": purFinal.join(', '),
         "본인이 생각하는 현재 영어 수준은 어느 정도인가요?": document.querySelector('input[name="level"]:checked')?.value || '',
         "영어로 말할 때 가장 어려운 점은 무엇인가요? (복수 가능)": diffFinal.join(', '),
         "가능한 시간을 모두 선택해주세요. (복수 가능)": [...document.querySelectorAll('input[name="schedule"]:checked')].map(i => i.value).join(', '),
-        "현재 더 관심 있는 과정은 무엇인가요?": document.querySelector('input[name="program"]:checked')?.value || '',
+        "현재 더 관심 있는 과정은 무엇인가요?": [...document.querySelectorAll('input[name="program"]:checked')].map(i => i.value).join(', '),
         "이외에 궁금하신 점이나, 상담시 참고할 내용 있으면 자유롭게 적어주시면 감사하겠습니다.": v('s4-notes')
       };
 
