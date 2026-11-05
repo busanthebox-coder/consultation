@@ -1337,19 +1337,19 @@
       </div>
       <div class="form-card">
         <div class="field-group">
-          <label class="field-label">더박스를 처음 알게 된 경로는 무엇인가요?<span class="req">*</span></label>
+          <label class="field-label">더박스를 어떻게 알게 되셨나요?<span class="req">*</span> <span class="opt">(복수 가능)</span></label>
           <div class="pill-group col2">
-            <div class="pill-item"><input type="radio" id="src-insta" name="source" value="인스타그램"><label
+            <div class="pill-item"><input type="checkbox" id="src-insta" name="source" value="인스타그램"><label
                 for="src-insta"><span class="pill-emoji">📸</span> 인스타그램</label></div>
-            <div class="pill-item"><input type="radio" id="src-naver" name="source" value="네이버"><label
+            <div class="pill-item"><input type="checkbox" id="src-naver" name="source" value="네이버"><label
                 for="src-naver"><span class="pill-emoji">🔍</span> 네이버</label></div>
-            <div class="pill-item"><input type="radio" id="src-friend" name="source" value="지인소개"><label
+            <div class="pill-item"><input type="checkbox" id="src-friend" name="source" value="지인소개"><label
                 for="src-friend"><span class="pill-emoji">🤝</span> 지인소개</label></div>
-            <div class="pill-item"><input type="radio" id="src-walk" name="source" value="지나가다 보고"><label
+            <div class="pill-item"><input type="checkbox" id="src-walk" name="source" value="지나가다 보고"><label
                 for="src-walk"><span class="pill-emoji">🚶</span> 지나가다 보고</label></div>
-            <div class="pill-item"><input type="radio" id="src-member" name="source" value="기존 회원 추천"><label
+            <div class="pill-item"><input type="checkbox" id="src-member" name="source" value="기존 회원 추천"><label
                 for="src-member"><span class="pill-emoji">⭐</span> 기존 회원 추천</label></div>
-            <div class="pill-item"><input type="radio" id="src-other" name="source" value="기타"><label
+            <div class="pill-item"><input type="checkbox" id="src-other" name="source" value="기타"><label
                 for="src-other"><span class="pill-emoji">💬</span> 기타</label></div>
           </div>
           <div class="cond-field" id="src-other-wrap" style="display:none">
@@ -1755,7 +1755,7 @@
           return;
         }
 
-        if (source.value === '기타' && !v('s2-source-other')) {
+        if (document.getElementById('src-other').checked && !v('s2-source-other')) {
           err.style.display = 'block';
           err.textContent = '⚠️ 기타 경로를 선택하셨다면 내용을 입력해주세요.';
           return;
@@ -1834,11 +1834,9 @@
       })
     );
 
-    document.querySelectorAll('input[name="source"]').forEach(r =>
-      r.addEventListener('change', () => {
-        document.getElementById('src-other-wrap').style.display = r.value === '기타' && r.checked ? 'block' : 'none';
-      })
-    );
+    document.getElementById('src-other').addEventListener('change', function () {
+      document.getElementById('src-other-wrap').style.display = this.checked ? 'block' : 'none';
+    });
 
     document.getElementById('pur-7').addEventListener('change', function () {
       document.getElementById('pur-other-wrap').style.display = this.checked ? 'block' : 'none';
@@ -1895,10 +1893,9 @@
         return;
       }
 
-      const srcEl = document.querySelector('input[name="source"]:checked');
-      const srcVal = srcEl?.value === '기타'
-        ? '기타: ' + v('s2-source-other')
-        : (srcEl?.value || '');
+      const srcVal = [...document.querySelectorAll('input[name="source"]:checked')]
+        .map(input => input.value === '기타' ? '기타: ' + v('s2-source-other') : input.value)
+        .join(', ');
 
       const purposes = [...document.querySelectorAll('input[name="purpose"]:checked')].map(i => i.value);
       const purFinal = purposes.includes('기타')
